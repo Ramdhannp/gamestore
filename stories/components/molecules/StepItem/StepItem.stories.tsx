@@ -15,6 +15,6 @@ export const Default: Story = {
 		icon: "/icon/step1.svg",
 		title: "1. Start",
 		desc1: "Pilih salah satu game",
-		desc2: "yang ingin kamu top up",
+		desc2: "yang ingin kamu top up ",
 	},
 };
