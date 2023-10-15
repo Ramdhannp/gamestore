@@ -1,4 +1,4 @@
-export default function () {
+export default function ToggleMenu () {
   return (
     <button
       className="navbar-toggler"
@@ -11,5 +11,5 @@ export default function () {
     >
       <span className="navbar-toggler-icon"></span>
     </button>
-  );
+  )
 }

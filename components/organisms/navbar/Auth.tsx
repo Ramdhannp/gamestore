@@ -1,13 +1,14 @@
-import Link from "next/link";
+import Link from 'next/link'
+import Image from 'next/image'
 
 interface AuthProps {
-  isLogin?: boolean;
+  isLogin?: boolean
 }
 
-export default function Auth(props: Partial<AuthProps>) {
-  const { isLogin } = props;
+export default function Auth (props: Partial<AuthProps>) {
+  const { isLogin } = props
 
-  if (isLogin) {
+  if (isLogin === true) {
     return (
       <li className="nav-item my-auto dropdown d-flex">
         <div className="vertical-line d-lg-block d-none"></div>
@@ -20,11 +21,11 @@ export default function Auth(props: Partial<AuthProps>) {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
+            <Image
               src="/img/avatar-1.png"
               className="rounded-circle"
-              width="40"
-              height="40"
+              width={40}
+              height={40}
               alt=""
             />
           </a>
@@ -65,7 +66,7 @@ export default function Auth(props: Partial<AuthProps>) {
           </ul>
         </div>
       </li>
-    );
+    )
   }
   return (
     <li className="nav-item my-auto">
@@ -77,5 +78,5 @@ export default function Auth(props: Partial<AuthProps>) {
         Sign In
       </a>
     </li>
-  );
+  )
 }
