@@ -5,7 +5,7 @@ export default function CheckoutItem () {
     <div className="game-checkout d-flex flex-row align-items-center pt-md-50 pb-md-50 pt-30 pb-30">
       <div className="pe-4">
         <div className="cropped">
-          <Image src="/img/Thumbnail-3.png" className="img-fluid" alt="" />
+          <Image src="/img/Thumbnail-3.png" width={200} height={200} className="img-fluid" alt="" />
         </div>
       </div>
       <div>
