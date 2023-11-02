@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useEffect } from 'react'
 import Footer from '../../components/organisms/Footer'
 import Navbar from '../../components/organisms/Navbar'

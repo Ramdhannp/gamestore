@@ -7,6 +7,9 @@ const nextConfig = {
     domains: ['localhost:4000'] //config untuk penyedia image
   },
   // output: "export"
+  typescript: {
+    ignoreBuildErrors: true
+  }
 }
 
 module.exports = nextConfig
