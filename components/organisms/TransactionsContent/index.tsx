@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import TableRow from './TableRow'
-import ButtonTab from './ButtonTab'
-import { getMemberHistory } from '../../../services/member'
-import { toast } from 'react-toastify'
+import { useCallback, useState } from 'react'
 import { NumericFormat } from 'react-number-format'
+import { toast } from 'react-toastify'
+import { getMemberHistory } from '../../../services/member'
+import ButtonTab from './ButtonTab'
+import TableRow from './TableRow'
 
 export default function TransactionsContent () {
   const [total, setTotal] = useState('')
   const [data, setData] = useState<any[]>([])
   const [tab, setTab] = useState('all')
 
-  const getMemberHistoryApi = useCallback(async (params) => {
+  const getMemberHistoryApi = useCallback(async (params: string) => {
     const response = await getMemberHistory(params)
     if (response.error) {
       toast.error(response.message)
@@ -20,11 +20,7 @@ export default function TransactionsContent () {
     }
   }, [getMemberHistory])
 
-  useEffect(() => {
-    getMemberHistoryApi('all')
-  }, [getMemberHistoryApi])
-
-  const onTab = (value) => {
+  const onTab = (value: string) => {
     getMemberHistoryApi(value)
     setTab(value)
   }

@@ -3,7 +3,7 @@ export interface InputProps {
   placeHolder: string
   value: string
   disabled?: boolean
-  onChange?: (event) => void
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 export default function Input (props: InputProps) {
   const { label, placeHolder, ...nativeProps } = props

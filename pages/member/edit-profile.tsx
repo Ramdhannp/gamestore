@@ -1,14 +1,14 @@
-import Image from 'next/image'
-import Sidebar from '../../components/organisms/Sidebar'
-import Input from '../../components/atoms/Input'
 import Cookies from 'js-cookie'
-import { type JwtPayloadTypes, type UserTypes } from '../../services/data-types'
 import { jwtDecode } from 'jwt-decode'
-import { useCallback, useEffect, useState } from 'react'
-import { editProfile } from '../../services/member'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import Input from '../../components/atoms/Input'
+import Sidebar from '../../components/organisms/Sidebar'
+import { type JwtPayloadTypes, type UserTypes } from '../../services/data-types'
+import { editProfile } from '../../services/member'
 
 export default function EditProfile () {
   const [user, setUser] = useState({
@@ -19,17 +19,6 @@ export default function EditProfile () {
   const [imagePreview, setImagePreview] = useState('')
   const [image, setImage] = useState<string | Blob>('')
   const router = useRouter()
-
-  const editProfileApi = useCallback(async (data) => {
-    const response = await editProfile(data)
-    if (response.error) {
-      toast.error(response.message)
-    } else {
-      toast.success('Berhasil edit profile. Silahkan sign in kembali')
-      Cookies.remove('token')
-      router.push('/sign-in')
-    }
-  }, [])
 
   useEffect(() => {
     const token = Cookies.get('token')
@@ -43,12 +32,20 @@ export default function EditProfile () {
     }
   }, [])
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const data = new FormData()
 
     data.append('name', user.name)
     data.append('avatar', image)
-    editProfileApi(data)
+
+    const response = await editProfile(data)
+    if (response.error) {
+      toast.error(response.message)
+    } else {
+      toast.success('Berhasil edit profile. Silahkan sign in kembali')
+      Cookies.remove('token')
+      router.push('/sign-in')
+    }
   }
   return (
     <section className="edit-profile overflow-auto">
