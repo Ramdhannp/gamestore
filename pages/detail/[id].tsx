@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Footer from '../../components/organisms/Footer'
-import NavbarPage from '../../components/organisms/Navbar'
+import NavbarPage from '../../components/organisms/Navbar/index'
 import TopUpForm from '../../components/organisms/TopUpForm'
 import TopUpItem from '../../components/organisms/TopUpItem'
 import { NominalsType, GameItemTypes, PaymentsTypes } from '../../services/data-types'
