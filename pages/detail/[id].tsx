@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Footer from '../../components/organisms/Footer'
-import NavbarPage from '../../components/organisms/Navbar/index'
+import Navbar from '../../components/organisms/navbar'
 import TopUpForm from '../../components/organisms/TopUpForm'
 import TopUpItem from '../../components/organisms/TopUpItem'
 import { NominalsType, GameItemTypes, PaymentsTypes } from '../../services/data-types'
@@ -20,7 +20,7 @@ export default function Detail ({ dataGame, nominals, payments }: DetailProps) {
   return (
     <>
     <Head><title>Detail</title></Head>
-      <NavbarPage />
+      <Navbar />
       <section className="detail pt-lg-60 pb-50">
         <div className="container-xxl container-fluid">
           <div className="detail-header pb-50">

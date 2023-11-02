@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import Navbar from '../components/organisms/Navbar'
+import Navbar from '../components/organisms/navbar'
 import MainBanner from '../components/organisms/MainBanner'
 import TransactionStep from '../components/organisms/TransactionStep'
 import FeaturedGame from '../components/organisms/FeaturedGame'
