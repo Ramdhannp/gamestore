@@ -3,7 +3,7 @@ import Footer from '../../components/organisms/Footer'
 import Navbar from '../../components/organisms/Navbar'
 import TopUpForm from '../../components/organisms/TopUpForm'
 import TopUpItem from '../../components/organisms/TopUpItem'
-import { type NominalsType, type GameItemTypes, type PaymentsTypes } from '../../services/data-types'
+import { NominalsType, GameItemTypes, PaymentsTypes } from '../../services/data-types'
 import { getDetailVoucher, getFeaturedGame } from '../../services/player'
 import Head from 'next/head'
 
