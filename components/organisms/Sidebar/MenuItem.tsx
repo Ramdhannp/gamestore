@@ -12,11 +12,12 @@ interface MenuItemProps {
   | 'settings'
   | 'transactions'
   active?: boolean
-  href: string
+  onClick?: () => void
+  href?: string
 }
 
 export default function MenuItem (props: Partial<MenuItemProps>) {
-  const { title, icon, active, href = '/' } = props
+  const { title, icon, active, onClick, href = '/' } = props
   const classItems = cx({
     item: true,
     'mb-30': true,
@@ -33,9 +34,16 @@ export default function MenuItem (props: Partial<MenuItemProps>) {
         />
       </div>
       <p className="item-title m-0">
+      {!onClick && (
         <Link href={href} className="text-lg text-decoration-none">
           {title}
         </Link>
+      )}
+      {onClick && (
+        <a onClick={onClick} className="text-lg text-decoration-none" style={{ cursor: 'pointer' }}>
+          {title}
+        </a>
+      )}
       </p>
     </div>
   )

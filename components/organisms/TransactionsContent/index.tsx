@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TableRow from './TableRow'
 import ButtonTab from './ButtonTab'
+import { getMemberHistory } from '../../../services/member'
+import { toast } from 'react-toastify'
+import { NumericFormat } from 'react-number-format'
 
 export default function TransactionsContent () {
+  const [total, setTotal] = useState('')
+  const [data, setData] = useState<any[]>([])
+  const [tab, setTab] = useState('all')
+
+  const getMemberHistoryApi = useCallback(async (params) => {
+    const response = await getMemberHistory(params)
+    if (response.error) {
+      toast.error(response.message)
+    } else {
+      setTotal(response.data.total)
+      setData(response.data.data)
+    }
+  }, [getMemberHistory])
+
+  useEffect(() => {
+    getMemberHistoryApi('all')
+  }, [getMemberHistoryApi])
+
+  const onTab = (value) => {
+    getMemberHistoryApi(value)
+    setTab(value)
+  }
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
@@ -12,16 +37,16 @@ export default function TransactionsContent () {
         <div className="mb-30">
           <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
           <h3 className="text-5xl fw-medium color-palette-1">
-            Rp 4.518.000.500
+          <NumericFormat value={total} prefix="Rp. " displayType="text" thousandSeparator='.' decimalSeparator=","/>
           </h3>
         </div>
         <div className="row mt-30 mb-20">
           <div className="col-lg-12 col-12 main-content">
             <div id="list_status_title">
-              <ButtonTab title="All Trx" active />
-              <ButtonTab title="Success" active={false} />
-              <ButtonTab title="Pending" active={false} />
-              <ButtonTab title="Failed" active={false} />
+              <ButtonTab title="All Trx" onClick= {() => { onTab('all') } } active={tab === 'all'} />
+              <ButtonTab title="Success" onClick= {() => { onTab('success') } } active={tab === 'success'} />
+              <ButtonTab title="Pending" onClick= {() => { onTab('pending') } } active={tab === 'pending'} />
+              <ButtonTab title="Failed" onClick= {() => { onTab('failed') } } active={tab === 'failed'} />
             </div>
           </div>
         </div>
@@ -43,39 +68,18 @@ export default function TransactionsContent () {
                 </tr>
               </thead>
               <tbody id="list_status_item">
-                <TableRow
-                  image="overview-1"
-                  title="Mobile Legends: The New Battle 2021"
-                  category="Desktop"
-                  item={200}
-                  price={290000}
-                  status="Pending"
-                />
-                <TableRow
-                  image="overview-2"
-                  title="Call of Duty:Modern"
-                  category="Desktop"
-                  item={550}
-                  price={740000}
-                  status="Success"
-                />
-                <TableRow
-                  image="overview-3"
-                  title="Clash of Clans"
-                  category="Mobile"
-                  item={100}
-                  price={120000}
-                  status="Failed"
-                />
-
-                <TableRow
-                  image="overview-4"
-                  title="The Royal Game"
-                  category="Mobile"
-                  item={225}
-                  price={200000}
-                  status="Pending"
-                />
+                {data.map((item) => (
+                  <TableRow
+                    key={item._id}
+                    title= {item.historyVoucherTopup.gameName}
+                    category={item.historyVoucherTopup.category}
+                    item={`${item.historyVoucherTopup.coinQuantity} ${item.historyVoucherTopup.coinName}`}
+                    price={item.historyVoucherTopup.price}
+                    status={item.status}
+                    image={item.historyVoucherTopup.thumbnail}
+                    id={item._id}
+                  />
+                ))}
               </tbody>
             </table>
           </div>

@@ -1,9 +1,12 @@
-/** @type {import('next').NextConfig} */
-// const nextConfig = {}
-module.exports = {
-    images: {
-      unoptimized: true,
-    },
-    output: "export"
-  }
-// module.exports = nextConfig
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+    domains: ['localhost:4000'] //config untuk penyedia image
+  },
+  // output: "export"
+}
+
+module.exports = nextConfig

@@ -1,12 +1,20 @@
-import Row from './Row'
 import Image from 'next/image'
+import { type TransactionDetailTypes } from '../../../services/data-types'
+import Row from './Row'
 
-export default function TransactionsDetailContent () {
+interface TransactionDetailContentProps {
+  data: TransactionDetailTypes
+}
+
+export default function TransactionsDetailContent (props: TransactionDetailContentProps) {
+  const { data } = props
+  const urlImage = `${process.env.NEXT_PUBLIC_IMAGE}/${data.historyVoucherTopup.thumbnail}`
+  const totalPrice = data.value + data.tax
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
         <h2 className="text-4xl fw-bold color-palette-1 mb-30">
-          Details #GG001
+          Details Transaction
         </h2>
         <div className="details">
           <div className="main-content main-content-card overflow-auto">
@@ -16,25 +24,24 @@ export default function TransactionsDetailContent () {
                   <div className="pe-4">
                     <div className="cropped">
                       <Image
-                        src="/img/Thumbnail-3.png"
+                        src={urlImage}
                         width={200}
                         height={130}
-                        className="img-fluid"
-                        alt=""
+                        className='img-fluid'
+                        alt=''
                       />
                     </div>
                   </div>
                   <div>
                     <p className="fw-bold text-xl color-palette-1 mb-10">
-                      Mobile Legends:
-                      <br /> The New Battle 2021
+                      {data.historyVoucherTopup.gameName}
                     </p>
-                    <p className="color-palette-2 m-0">Category: Mobile</p>
+                    <p className="color-palette-2 m-0">Category: {data.historyVoucherTopup.category}</p>
                   </div>
                 </div>
                 <div>
                   <p className="fw-medium text-center label pending m-0 rounded-pill">
-                    Pending
+                    {data.status}
                   </p>
                 </div>
               </div>
@@ -43,31 +50,32 @@ export default function TransactionsDetailContent () {
                 <h2 className="fw-bold text-xl color-palette-1 mb-20">
                   Purchase Details
                 </h2>
-                <Row label="Your Game ID" value="masyoshizero" />
-                <Row label="Order ID" value="#GG001" />
-                <Row label="Item" value="250 Diamonds" />
-                <Row label="Price" value="Rp 4.228.500" />
-                <Row label="Tax (10%)" value="Rp 55.000.600" />
+                <Row label="Your Game ID" value={data.accountUser} />
+                <Row label="Order ID" value={data._id} />
+                <Row label="Item" value={`${data.historyVoucherTopup.coinQuantity} ${data.historyVoucherTopup.coinName}`} />
+                <Row label="Price" value={data.value} price />
+                <Row label="Tax (10%)" value={data.tax} price />
                 <Row
                   label="Total"
-                  value="Rp 55.000.600"
+                  value={totalPrice}
                   className="color-palette-4"
+                  price
                 />
               </div>
               <div className="payment pt-10 pb-10">
                 <h2 className="fw-bold text-xl color-palette-1 mb-20">
                   Payment Informations
                 </h2>
-                <Row label="Your Account Name" value="Masayoshi Angga Zero" />
-                <Row label="Type" value="Worldwide Transfer" />
-                <Row label="Bank Name" value="Mandiri" />
-                <Row label="Bank Account Name" value="PT Store GG Indonesia" />
-                <Row label="Bank Number" value="1800 - 9090 - 2021" />
+                <Row label="Your Account Name" value={data.name} />
+                <Row label="Type" value={data.historyPayment.type} />
+                <Row label="Bank Name" value={data.historyPayment.bankname} />
+                <Row label="Bank Account Name" value={data.historyPayment.name} />
+                <Row label="Bank Number" value={data.historyPayment.noRekening} />
               </div>
               <div className="d-md-block d-flex flex-column w-100">
                 <a
                   className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
-                  href="#"
+                  href="https://wa.me/6289621253726"
                   role="button"
                 >
                   WhatsApp ke Admin

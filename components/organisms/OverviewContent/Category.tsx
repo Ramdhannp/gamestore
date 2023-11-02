@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
+import { NumericFormat } from 'react-number-format'
 interface CategoryItemProps {
-  icon: 'desktop' | 'mobile' | 'other'
+  icon: string
   price: number
   children: ReactNode
 }
@@ -13,16 +14,18 @@ export default function Category (props: CategoryItemProps) {
       <div className="categories-card">
         <div className="d-flex align-items-center mb-24">
           <Image
-            src={`/icon/ic-${icon}.svg`}
+            src={`/icon/ic-${icon.toLowerCase()}.svg`}
             width={60}
             height={60}
-            alt="icon desktop"
+            alt="icon"
           />
           <p className="color-palette-1 mb-0 ms-12">{children}</p>
         </div>
         <div>
           <p className="text-sm color-palette-2 mb-1">Total Spent</p>
-          <p className="text-2xl color-palette-1 fw-medium m-0">Rp {price}</p>
+          <p className="text-2xl color-palette-1 fw-medium m-0">
+          <NumericFormat value={price} prefix="Rp. " displayType="text" thousandSeparator='.' decimalSeparator=","/>
+          </p>
         </div>
       </div>
     </div>

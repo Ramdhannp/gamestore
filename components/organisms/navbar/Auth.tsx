@@ -1,14 +1,40 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
+import { type JwtPayloadTypes, type UserTypes } from '../../../services/data-types'
+import { useRouter } from 'next/router'
 
-interface AuthProps {
-  isLogin?: boolean
-}
+export default function Auth () {
+  const [user, setUser] = useState({
+    avatar: '',
+    email: '',
+    name: ''
+  })
+  const [isLogin, setIsLogin] = useState(false)
+  const router = useRouter()
 
-export default function Auth (props: Partial<AuthProps>) {
-  const { isLogin } = props
+  useEffect(() => {
+    const token = Cookies.get('token')
+    if (token) {
+      const jwtToken = atob(token)
+      const payload: JwtPayloadTypes = jwtDecode(jwtToken)
+      const userFromPayload: UserTypes = payload.player
+      const urlImage = process.env.NEXT_PUBLIC_IMAGE
+      userFromPayload.avatar = `${urlImage}/${userFromPayload.avatar}`
+      setUser(userFromPayload)
+      setIsLogin(true)
+    }
+  }, [])
 
-  if (isLogin === true) {
+  const logOut = () => {
+    Cookies.remove('token')
+    setIsLogin(false)
+    router.push('/')
+  }
+
+  if (isLogin) {
     return (
       <li className="nav-item my-auto dropdown d-flex">
         <div className="vertical-line d-lg-block d-none"></div>
@@ -22,7 +48,7 @@ export default function Auth (props: Partial<AuthProps>) {
             aria-expanded="false"
           >
             <Image
-              src="/img/avatar-1.png"
+              src={`${user.avatar}`}
               className="rounded-circle"
               width={40}
               height={40}
@@ -55,13 +81,12 @@ export default function Auth (props: Partial<AuthProps>) {
                 Account Settings
               </Link>
             </li>
-            <li>
-              <Link
+            <li onClick={logOut} style={{ cursor: 'pointer' }}>
+              <a
                 className="dropdown-item text-lg color-palette-2"
-                href="/sign-in"
               >
                 Log Out
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
@@ -70,13 +95,13 @@ export default function Auth (props: Partial<AuthProps>) {
   }
   return (
     <li className="nav-item my-auto">
-      <a
+      <Link
         className="btn btn-sign-in d-flex justify-content-center ms-lg-2 rounded-pill"
-        href="./src/sign-in.html"
+        href="/sign-in"
         role="button"
       >
         Sign In
-      </a>
+      </Link>
     </li>
   )
 }

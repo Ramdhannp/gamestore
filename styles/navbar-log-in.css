@@ -63,3 +63,8 @@
     }
     /*  */
  }
+
+ .rounded-circle {
+    object-fit: cover;
+    border-radius: 100%;
+ }

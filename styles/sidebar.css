@@ -67,3 +67,8 @@
         overflow-y: hidden;
     }
 }
+
+.image-profile {
+    object-fit: cover;
+    border-radius: 100%;
+}

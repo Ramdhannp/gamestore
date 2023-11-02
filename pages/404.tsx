@@ -1,6 +1,9 @@
+import Head from 'next/head'
+
 export default function Custom404 () {
   return (
     <section className="not-found mx-auto pt-145 pb-md-212 pb-100">
+      <Head><title>404</title></Head>
       <div className="container-fluid">
         <div className="text-center">
           <svg

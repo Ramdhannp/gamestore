@@ -1,6 +1,23 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { useCallback, useEffect, useState } from 'react'
 import GameItem from '../../molecules/GameItem'
+import { getFeaturedGame } from '../../../services/player'
+import { type GameItemTypes } from '../../../services/data-types'
 
 export default function FeaturedGame () {
+  const [gameList, setGameList] = useState([])
+
+  const getFeaturedGameList = useCallback(async () => {
+    const data = await getFeaturedGame()
+
+    setGameList(data)
+  }, [getFeaturedGame])
+
+  useEffect(() => {
+    getFeaturedGameList()
+  }, [])
+
+  const API_IMG = process.env.NEXT_PUBLIC_IMAGE
   return (
     <section className="featured-game pt-50 pb-50">
       <div className="container-fluid">
@@ -12,31 +29,16 @@ export default function FeaturedGame () {
           className="d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-between gap-lg-3 gap-4"
           data-aos="fade-up"
         >
-          <GameItem
-            thumbnail="/img/Thumbnail-1.png"
-            title="Super Mechs"
-            category="Mobile"
-          />
-          <GameItem
-            thumbnail="/img/Thumbnail-2.png"
-            title="Call of Duty: Modern"
-            category="Mobile"
-          />
-          <GameItem
-            thumbnail="/img/Thumbnail-3.png"
-            title="Mobile Legends"
-            category="Mobile"
-          />
-          <GameItem
-            thumbnail="/img/Thumbnail-4.png"
-            title="Clash of Clans"
-            category="Mobile"
-          />
-          <GameItem
-            thumbnail="/img/Thumbnail-5.png"
-            title="Valorant"
-            category="Desktop"
-          />
+          {gameList.map((item: GameItemTypes) => {
+            return (
+              <GameItem key={item._id}
+                thumbnail={`${API_IMG}/${item.thumbnail}`}
+                title={item.name}
+                category={item.category.name}
+                id={item._id}
+              />
+            )
+          })}
         </div>
       </div>
     </section>
