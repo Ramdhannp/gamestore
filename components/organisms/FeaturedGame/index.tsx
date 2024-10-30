@@ -29,16 +29,14 @@ export default function FeaturedGame () {
           className="d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-between gap-lg-3 gap-4"
           data-aos="fade-up"
         >
-          {gameList.map((item: GameItemTypes) => {
-            return (
+          {gameList.map((item: GameItemTypes) => (
               <GameItem key={item._id}
                 thumbnail={`${API_IMG}/${item.thumbnail}`}
                 title={item.name}
                 category={item.category.name}
                 id={item._id}
               />
-            )
-          })}
+          ))}
         </div>
       </div>
     </section>
